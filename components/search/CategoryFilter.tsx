@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { ScrollView, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { Pressable, Text } from '@react-native-reusables/core';
 
 const categories = [
   { id: 'all', label: 'All' },
@@ -31,7 +30,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
       contentContainerStyle={styles.container}
     >
       {categories.map((category) => (
-        <Pressable
+        <TouchableOpacity
           key={category.id}
           onPress={() => onSelectCategory(category.id)}
           style={[
@@ -47,15 +46,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
                   : colors.borderLight,
             },
           ]}
-          hoveredStyle={{
-            backgroundColor:
-              selectedCategory === category.id
-                ? colors.primary
-                : colors.background.tertiary,
-          }}
-          pressedStyle={{
-            opacity: 0.8,
-          }}
+          activeOpacity={0.8}
         >
           <Text
             style={[
@@ -70,7 +61,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
           >
             {category.label}
           </Text>
-        </Pressable>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );

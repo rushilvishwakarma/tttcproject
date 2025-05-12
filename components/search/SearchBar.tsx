@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import { Search } from 'lucide-react-native';
 import { useTheme } from '@/contexts/ThemeContext';
-import { TextInput, View } from '@react-native-reusables/core';
 
 interface SearchBarProps {
   value: string;
