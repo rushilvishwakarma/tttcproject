@@ -1,7 +1,5 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
-import { Text } from '@react-native-reusables/core';
-import { Pressable } from '@react-native-reusables/pressables';
+import { ActivityIndicator, Pressable, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface ButtonProps {
@@ -55,36 +53,28 @@ export const Button: React.FC<ButtonProps> = ({
     <Pressable
       onPress={onPress}
       disabled={disabled || loading}
-      style={[
+      style={({ pressed }) => [
+        styles.button,
         {
-          height: 48,
-          borderRadius: 10,
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 16,
           backgroundColor: getBackgroundColor(),
           borderColor: getBorderColor(),
           borderWidth: variant === 'outline' ? 1 : 0,
+          opacity: (pressed || disabled) ? 0.8 : 1,
+          transform: [{ scale: pressed ? 0.98 : 1 }]
         },
         style
       ]}
-      pressedStyle={{
-        opacity: 0.8,
-        transform: [{ scale: 0.98 }]
-      }}
-      disabledStyle={{
-        opacity: 0.5
-      }}
     >
       {loading ? (
         <ActivityIndicator color={getTextColor()} size="small" />
       ) : (
         <Text
-          style={{
-            fontSize: 16,
-            fontFamily: 'Inter-SemiBold',
-            color: getTextColor()
-          }}
+          style={[
+            styles.buttonText,
+            {
+              color: getTextColor(),
+            }
+          ]}
         >
           {title}
         </Text>
@@ -92,3 +82,17 @@ export const Button: React.FC<ButtonProps> = ({
     </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  button: {
+    height: 48,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontFamily: 'Inter-SemiBold',
+  }
+});
