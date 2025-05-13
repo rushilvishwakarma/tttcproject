@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { Search } from 'lucide-react-native';
 import { useTheme } from '@/contexts/ThemeContext';
+import { TextInput } from '@react-native-reusables/core';
 
 interface SearchBarProps {
   value: string;
@@ -13,42 +14,31 @@ export const SearchBar: React.FC<SearchBarProps> = ({ value, onChangeText }) => 
 
   return (
     <View
-      style={[
-        styles.container,
-        {
-          backgroundColor: colors.background.secondary,
-          borderColor: colors.borderLight,
-        },
-      ]}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: colors.background.secondary,
+        borderColor: colors.borderLight,
+        borderRadius: 12,
+        borderWidth: 1,
+        height: 48,
+        paddingHorizontal: 16,
+      }}
     >
-      <Search size={20} color={colors.text.tertiary} style={styles.icon} />
+      <Search size={20} color={colors.text.tertiary} style={{ marginRight: 12 }} />
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder="Search stations, routes, or trains"
         placeholderTextColor={colors.text.tertiary}
-        style={[styles.input, { color: colors.text.primary }]}
+        style={{
+          flex: 1,
+          fontSize: 16,
+          fontFamily: 'Inter-Regular',
+          padding: 0,
+          color: colors.text.primary,
+        }}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 12,
-    borderWidth: 1,
-    height: 48,
-    paddingHorizontal: 16,
-  },
-  icon: {
-    marginRight: 12,
-  },
-  input: {
-    flex: 1,
-    fontSize: 16,
-    fontFamily: 'Inter-Regular',
-    padding: 0,
-  },
-});

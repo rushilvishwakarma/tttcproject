@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { useTheme } from '@/contexts/ThemeContext';
+import { Pressable, Text } from '@react-native-reusables/core';
 
 const categories = [
   { id: 'all', label: 'All' },
@@ -27,59 +28,44 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={{
+        paddingVertical: 4,
+        gap: 8,
+      }}
     >
       {categories.map((category) => (
-        <TouchableOpacity
+        <Pressable
           key={category.id}
           onPress={() => onSelectCategory(category.id)}
-          style={[
-            styles.category,
-            {
-              backgroundColor:
-                selectedCategory === category.id
-                  ? colors.primary
-                  : colors.background.secondary,
-              borderColor:
-                selectedCategory === category.id
-                  ? colors.primary
-                  : colors.borderLight,
-            },
-          ]}
-          activeOpacity={0.8}
+          style={({ pressed }) => ({
+            backgroundColor: selectedCategory === category.id
+              ? colors.primary
+              : pressed
+                ? colors.background.tertiary
+                : colors.background.secondary,
+            borderColor: selectedCategory === category.id
+              ? colors.primary
+              : colors.borderLight,
+            borderWidth: 1,
+            borderRadius: 20,
+            paddingHorizontal: 16,
+            paddingVertical: 8,
+            opacity: pressed ? 0.9 : 1,
+          })}
         >
           <Text
-            style={[
-              styles.categoryText,
-              {
-                color:
-                  selectedCategory === category.id
-                    ? colors.white
-                    : colors.text.primary,
-              },
-            ]}
+            style={{
+              fontSize: 14,
+              fontFamily: 'Inter-Medium',
+              color: selectedCategory === category.id
+                ? colors.white
+                : colors.text.primary,
+            }}
           >
             {category.label}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
       ))}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 4,
-    gap: 8,
-  },
-  category: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-  },
-  categoryText: {
-    fontSize: 14,
-    fontFamily: 'Inter-Medium',
-  },
-});
